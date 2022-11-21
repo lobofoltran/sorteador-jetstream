@@ -14,11 +14,9 @@
                     <x-jet-nav-link href="{{ route('sorteador.index') }}" :active="request()->routeIs('sorteador.index')">
                         Sorteador de Texto
                     </x-jet-nav-link>
-                @auth
-                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    <x-jet-nav-link href="{{ route('history.index') }}" :active="request()->routeIs('history.index')">
+                        Histórico
                     </x-jet-nav-link>
-                @endauth
                 </div>
             </div>
 
@@ -150,9 +148,6 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-jet-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->

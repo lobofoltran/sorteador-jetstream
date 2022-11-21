@@ -1,41 +1,49 @@
 <x-app-layout>
-    <div id="formulario">
-        <x-slot name="header">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Sorteador de Texto
-            </h2>
-        </x-slot>
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Sorteador de Texto
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <form method="POST" action="/sortear">
+                @csrf
+                <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
                         <x-jet-validation-errors class="mb-4"/>
+                        <div class="mb-6">
+                            <label for="number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quantidade de Palavras a serem Sorteadas:</label>
+                            <input type="number" id="number" name="qtde" value="{{ old('qtde') ?? 1 }}" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        </div>
                         <div style="margin-bottom: 10px;">Digite o texto a ser sorteado:</div>
                         <div class="mb-4 w-full bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
                             <div class="py-2 px-4 bg-white rounded-t-lg dark:bg-gray-800">
-                                <textarea id="texto" name="texto" rows="4" class="px-0 w-full text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="Texto separado por ponto e vírgula (;) ou por quebra de linha." required></textarea>
+                                <textarea id="texto" name="texto" value="{{ old('texto') }}" rows="4" class="px-0 w-full text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="Texto separado por ponto e vírgula (;) ou por quebra de linha." required></textarea>
                             </div>
                             <div class="flex justify-between items-center py-2 px-3 border-t dark:border-gray-600">
-                                <button id="buttonEnviar" onclick="realizaSorteio()" class="py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
+                                {{-- <button id="buttonEnviar" onclick="realizaSorteio()" class="py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
+                                    Enviar
+                                </button> --}}
+                                <button type="submit" class="py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
                                     Enviar
                                 </button>
                                 <div>
-                                    <input id="ordem" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                    <label for="ordem" style="margin-right:5px" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Ordem decrescente</label>
+                                    <input id="decrescente" type="checkbox" value="decrescente" name="decrescente" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="decrescente" style="margin-right:5px" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Ordem decrescente</label>
                                     <button type="button" class="py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
                                         Enviar arquivo .csv ou .txt
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        <div id="resultado"></div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 
-    <script>
+    {{-- <script>
         function realizaSorteio() {
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -59,7 +67,7 @@
                     Carregando...`;
 
             setTimeout(async function() {
-                let response = await fetch("http://localhost:8000/api/sortear", requestOptions)
+                let response = await fetch('/sortear', requestOptions)
                 .then(response => response.text())
                 .then(function(response) {
                     document.getElementById('resultado').innerHTML = response;
@@ -70,5 +78,5 @@
             }, 1000);
                 
         }
-    </script>
+    </script> --}}
 </x-app-layout>
